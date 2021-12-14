@@ -7,3 +7,5 @@ C:\Users\Gio\source\repos\MainProject\MainProject\obj\Debug\MainProject.csproj.G
 C:\Users\Gio\source\repos\MainProject\MainProject\obj\Debug\MainProject.csproj.CoreCompileInputs.cache
 C:\Users\Gio\source\repos\MainProject\MainProject\obj\Debug\MainProject.exe
 C:\Users\Gio\source\repos\MainProject\MainProject\obj\Debug\MainProject.pdb
+C:\Users\Gio\source\repos\MainProject\MainProject\obj\Debug\MainProject.Form1.resources
+C:\Users\Gio\source\repos\MainProject\MainProject\obj\Debug\MainProject.RegisterForm.resources
