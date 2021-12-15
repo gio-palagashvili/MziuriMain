@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Net.Mail;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using static System.String;
@@ -18,12 +19,37 @@ namespace MainProject
         {
             label3.Hide();
         }
-        private bool EmailValidation(string pEmail)
+
+        private bool IsValid(string emailaddress)
         {
-            return Regex.IsMatch(pEmail,
-                @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
-                @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
-                RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            try
+            {
+                MailAddress m = new MailAddress(emailaddress);
+
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
+
+        private bool MailExists(string mail)
+        {
+            var z = SQLprocedure.SelectUserByMail(mail).Rows.Count;
+            return z > 0;
+        }
+        private static string ToMd5(string input)
+        {
+            using var md5 = System.Security.Cryptography.MD5.Create();
+            var inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            var hashBytes = md5.ComputeHash(inputBytes);
+            var sb = new StringBuilder();
+            foreach (var b in hashBytes)
+            {
+                sb.Append(b.ToString("X2"));
+            }
+            return sb.ToString();
         }
         private void log_Click(object sender, System.EventArgs e)
         {
@@ -31,37 +57,62 @@ namespace MainProject
             var form1 = new Form1();
             form1.ShowDialog();
         }
-
         private void register_Click_1(object sender, EventArgs e)
         {
             label3.ForeColor = Color.Red;
             var name = textBox1.Text;
             var lastname = textBox2.Text;
-            var phoneNumber = textBox3.Text.Length > 0 && textBox3.Text.Length < 15? textBox3.Text : "";
+            var phoneNumber = textBox3.Text.Length > 0 && textBox3.Text.Length < 10? textBox3.Text : "";
             var email = textBox4.Text;
             var password = textBox5.Text;
             var rPassword = textBox6.Text;
            
-            if (name.Length == 0 || lastname.Length  == 0 || email.Length == 0 || password.Length == 0 || rPassword.Length == 0)
+            if (name.Length > 0 && lastname.Length  > 0 && email.Length > 0 && password.Length > 0 && rPassword.Length > 0)
+            {
+                label3.Hide();
+                if (IsValid(email))
+                {
+                    label3.Hide();
+                    if (!MailExists(email))
+                    {
+                        label3.Hide();
+                        if (password == rPassword)
+                        {
+                            label3.Hide();
+                            //final
+                            SQLprocedure.InsertUser(new User
+                            {
+                                Id = 0, password = ToMd5(password), Lastname = lastname, Name = name, Mail = email,
+                                Role = "default", PhoneNumber = phoneNumber
+                            });
+                            var popUp = new PopUp {text = "registered", route = "login"};
+                            
+                            Hide();
+                            popUp.ShowDialog();
+                        }
+                        else
+                        {
+                            label3.Show();
+                            label3.Text = "password don't match";
+                        }
+                    }
+                    else
+                    {
+                        label3.Show();
+                        label3.Text = "mail already exists";
+                    }
+                }
+                else
+                {
+                    label3.Show();
+                    label3.Text = "invalid email";
+                }
+            }
+            else
             {
                 label3.Show();
                 label3.Text = "only phone number field can be empty";
             }
-
-            if (!EmailValidation(email))
-            {
-                label3.Text = "invalid email";label3.Show();
-            }
-            else
-            {
-                label3.Text = Empty;
-                if (password == rPassword)
-                {
-                    label3.Text = Empty;
-                }
-                label3.Text = "passwords don't match";label3.Show();
-            }
-           
         }
     }
 
