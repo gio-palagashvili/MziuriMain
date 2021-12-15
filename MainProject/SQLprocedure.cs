@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace MainProject
 {
@@ -11,6 +12,18 @@ namespace MainProject
         private static SqlCommand _cmd;
         private static SqlDataAdapter _dataAdapter;
 
+        private static string ToMd5(string input)
+        {
+            using var md5 = System.Security.Cryptography.MD5.Create();
+            var inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            var hashBytes = md5.ComputeHash(inputBytes);
+            var sb = new StringBuilder();
+            foreach (var b in hashBytes)
+            {
+                sb.Append(b.ToString("X2"));
+            }
+            return sb.ToString();
+        }
         public static void InsertUser(User user)
         {
             _cmd = new SqlCommand("InsertUser", Conn) { CommandType = CommandType.StoredProcedure };
@@ -28,11 +41,10 @@ namespace MainProject
             _cmd.ExecuteNonQuery();
             Conn.Close();
         }
-
         public static DataTable SelectUserByMail(string mail)
         {
             _cmd = new SqlCommand("SelectUserByMail", Conn) { CommandType = CommandType.StoredProcedure };
-            var mailParameter = new SqlParameter("@mail", SqlDbType.VarChar) {Value = mail};
+            var mailParameter = new SqlParameter("@mail", SqlDbType.VarChar) {Value = mail.ToLower()};
             _cmd.Parameters.Add(mailParameter);
             
             _dataAdapter = new SqlDataAdapter(_cmd);
@@ -40,6 +52,20 @@ namespace MainProject
             _dataAdapter.Fill(table);
             
             return table;
+        }
+        public static bool LogIn(string mail, string password)
+        {
+            _cmd = new SqlCommand("LogIn", Conn) { CommandType = CommandType.StoredProcedure };
+            var paramss = new SqlParameter[2];
+            paramss[0] = new SqlParameter("@mail", SqlDbType.VarChar, 50) {Value = mail.ToLower()};
+            paramss[1] = new SqlParameter("@password", SqlDbType.VarChar, 50) {Value = ToMd5(password)};
+            _cmd.Parameters.AddRange(paramss);
+            
+            _dataAdapter = new SqlDataAdapter(_cmd);
+            var table = new DataTable();
+            _dataAdapter.Fill(table);
+            
+            return table.Rows.Count > 0;
         }
     }
 }

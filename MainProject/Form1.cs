@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MainProject
@@ -21,14 +13,25 @@ namespace MainProject
         private void Form1_Load(object sender, EventArgs e)
         {
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-        }
         private void register_Click(object sender, EventArgs e)
         {
             Hide();
             var registerForm = new RegisterForm();
             registerForm.ShowDialog();
+        }
+
+        private void Log_Click(object sender, EventArgs e)
+        {
+            var mail = textBox1.Text;
+            var password = textBox2.Text;
+            
+            if (password.Length > 0 && mail.Length > 0)
+            {
+                if (SQLprocedure.LogIn(mail, password))
+                {
+                    textBox1.Text = "logged in";
+                }
+            }
         }
     }
 }

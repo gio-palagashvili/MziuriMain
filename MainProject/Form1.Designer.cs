@@ -83,6 +83,7 @@ namespace MainProject
             this.Log.TabIndex = 4;
             this.Log.Text = "Log in";
             this.Log.UseVisualStyleBackColor = false;
+            this.Log.Click += new System.EventHandler(this.Log_Click);
             // 
             // register
             // 
@@ -112,11 +113,10 @@ namespace MainProject
             this.Name = "Form1";
             this.RightToLeftLayout = true;
             this.Text = "Form1";
-            this.TransparencyKey = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(3)))));
+            this.TransparencyKey = System.Drawing.Color.FromArgb(((int) (((byte) (0)))), ((int) (((byte) (0)))), ((int) (((byte) (0)))), ((int) (((byte) (3)))));
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
