@@ -19,6 +19,8 @@ namespace MainProject
             password.ForeColor = Color.White;
             textBox1.BackColor = ColorTranslator.FromHtml("#25262C");
             textBox2.BackColor = ColorTranslator.FromHtml("#25262C");
+            textBox1.ForeColor = Color.White;            
+            textBox2.ForeColor = Color.White;
             Log.BackColor = ColorTranslator.FromHtml("#3077E3");
             Log.FlatStyle = FlatStyle.Flat;
             Log.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#25262C");

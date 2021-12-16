@@ -18,13 +18,46 @@ namespace MainProject
         private void RegisterForm_Load(object sender, System.EventArgs e)
         {
             label3.Hide();
+            CssDark();
+        }
+        private void CssDark()
+        {
+        BackColor = ColorTranslator.FromHtml("#1B1C22");
+        register.Font = new Font("Arial", 9,FontStyle.Bold);
+        register.ForeColor = Color.White;
+        register.BackColor = ColorTranslator.FromHtml("#3077E3");
+        register.FlatStyle = FlatStyle.Flat;
+        register.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#25262C");
+        
+        label1.ForeColor = Color.White;
+        label2.ForeColor = Color.White;
+        name.ForeColor = Color.White;
+        password.ForeColor = Color.White;
+        Rpassword.ForeColor = Color.White;
+        email.ForeColor = Color.White;
+        lastname.ForeColor = Color.White;
+        
+        textBox1.BackColor = ColorTranslator.FromHtml("#25262C");
+        textBox1.BorderStyle = BorderStyle.None;
+        textBox2.BackColor = ColorTranslator.FromHtml("#25262C");
+        textBox2.BorderStyle = BorderStyle.None;
+        textBox3.BackColor = ColorTranslator.FromHtml("#25262C");
+        textBox3.BorderStyle = BorderStyle.None;
+        textBox4.BackColor = ColorTranslator.FromHtml("#25262C");
+        textBox4.BorderStyle = BorderStyle.None;
+        textBox5.BackColor = ColorTranslator.FromHtml("#25262C");
+        textBox5.BorderStyle = BorderStyle.None;
+        textBox6.BackColor = ColorTranslator.FromHtml("#25262C");
+        textBox6.BorderStyle = BorderStyle.None;
+        
+        log.ForeColor = Color.White;
         }
 
-        private bool IsValid(string emailaddress)
+        private bool IsValid(string email)
         {
             try
             {
-                MailAddress m = new MailAddress(emailaddress);
+                var m = new MailAddress(email);
 
                 return true;
             }
@@ -33,7 +66,6 @@ namespace MainProject
                 return false;
             }
         }
-
         private bool MailExists(string mail)
         {
             var z = SQLprocedure.SelectUserByMail(mail).Rows.Count;
