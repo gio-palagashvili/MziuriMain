@@ -117,7 +117,7 @@ namespace MainProject
                                 Id = 0, password = ToMd5(password), Lastname = lastname, Name = name, Mail = email,
                                 Role = "default", PhoneNumber = phoneNumber
                             });
-                            var popUp = new PopUp {text = "registered", route = "login"};
+                            var popUp = new PopUp {text = "registered", Route = "login"};
                             
                             Hide();
                             popUp.ShowDialog();

@@ -5,7 +5,7 @@ namespace MainProject
     public partial class PopUp : Form
     {
         public string text { get; set; }
-        public string route { get; set; }
+        public string Route { get; set; }
         public PopUp()
         {
             InitializeComponent();
@@ -14,7 +14,7 @@ namespace MainProject
 
         private void button2_Click(object sender, System.EventArgs e)
         {
-            switch (route)
+            switch (Route)
             {
                 case "login":
                     Hide();

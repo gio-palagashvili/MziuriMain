@@ -10,3 +10,4 @@ C:\Users\Gio\source\repos\MainProject\MainProject\obj\Debug\MainProject.pdb
 C:\Users\Gio\source\repos\MainProject\MainProject\obj\Debug\MainProject.Form1.resources
 C:\Users\Gio\source\repos\MainProject\MainProject\obj\Debug\MainProject.RegisterForm.resources
 C:\Users\Gio\source\repos\MainProject\MainProject\obj\Debug\MainProject.PopUp.resources
+C:\Users\Gio\source\repos\MainProject\MainProject\obj\Debug\MainProject.Settings.resources

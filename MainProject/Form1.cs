@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace MainProject
 {
@@ -10,7 +11,34 @@ namespace MainProject
         public Form1()
         {
             InitializeComponent();
-            CssDark();
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            ReadSettings();
+        }
+
+        private XMLSetting ReadSettings()
+        {
+            var doc = new XmlDocument();
+            doc.Load("C:/Users/Gio/source/repos/MainProject/MainProject/Settings.xml");
+            if (doc.DocumentElement?.ChildNodes == null) return new XMLSetting();
+            var text = string.Empty;
+            
+            foreach (XmlNode node in doc.DocumentElement?.ChildNodes)
+            {
+                text = node.InnerText;
+            }
+
+            if (text == "true")
+            {
+                CssDark();
+            }
+            else
+            {
+                CssLight();
+            }            
+            
+            return new XMLSetting();
         }
         private void CssDark()
         {
@@ -28,15 +56,11 @@ namespace MainProject
             Log.Font = new Font("Arial", 10,FontStyle.Bold);
             label1.Font = new Font("Arial", 12, FontStyle.Bold);
         }
-
         private void CssLight()
         {
             BackColor = ColorTranslator.FromHtml("#FAFBFD");
             textBox1.BackColor = ColorTranslator.FromHtml("#FAFAFA");
             textBox2.BackColor = ColorTranslator.FromHtml("#25262C");
-        }
-        private void Form1_Load(object sender, EventArgs e)
-        {
         }
         private void register_Click(object sender, EventArgs e)
         {
@@ -44,7 +68,6 @@ namespace MainProject
             var registerForm = new RegisterForm();
             registerForm.ShowDialog();
         }
-
         private void Log_Click(object sender, EventArgs e)
         {
             var mail = textBox1.Text;
@@ -58,6 +81,15 @@ namespace MainProject
                 }
             }
         }
-       
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void label2_Click(object sender, EventArgs e)
+        {
+            Hide();
+            var settings = new Settings();
+            settings.ShowDialog();
+        }
     }
 }
