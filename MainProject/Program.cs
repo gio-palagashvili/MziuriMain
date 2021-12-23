@@ -19,4 +19,7 @@ namespace MainProject
             Application.Run(new Form1());
         }
     }
+    
+    public enum ScreenMode { Dark, Light}
+    public enum Role { None, User, Trader, Moderator, Administrator}
 }
