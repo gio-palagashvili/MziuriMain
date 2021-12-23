@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
@@ -7,7 +7,8 @@ namespace MainProject
 {
     public partial class Form1 : Form
     {
-      
+        public static Form1 mainForm;
+        public Panel pnlContainer { get; set; }
         public Form1()
         {
             InitializeComponent();
@@ -90,6 +91,11 @@ namespace MainProject
             Hide();
             var settings = new Settings();
             settings.ShowDialog();
+        }
+
+        private void panelConteiner_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
